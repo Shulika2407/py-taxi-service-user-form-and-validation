@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import MaxLengthValidator, RegexValidator
 from django import forms
@@ -29,7 +28,9 @@ class DriverLicenseUpdateForm(forms.ModelForm):
                 MaxLengthValidator(self.LICENSE_LENGTH),
                 RegexValidator(
                     regex=self.LICENSE_PATTERN,
-                    message="License number must consist of 3 uppercase letters followed by 5 digits (e.g. ABC12345)"
+                    message="License number must consist of 3 "
+                            "uppercase letters followed by"
+                            " 5 digits (e.g. ABC12345)"
                 )
             ]
         )
@@ -41,7 +42,7 @@ class DriverLicenseUpdateForm(forms.ModelForm):
 
 class CarForm(forms.ModelForm):
     drivers = forms.ModelMultipleChoiceField(
-        queryset=get_user_model().objects.all(),
+        queryset=Driver.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
